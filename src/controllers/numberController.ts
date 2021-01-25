@@ -5,12 +5,20 @@ const numberController = (request: Request, response: Response) => {
     try {
         const n: number= Number(request.params.number);
     
-    const result = ((n % 2) == 1);
+        if (isNaN(n)) {
+            throw new Error('expected an integer');
+        } 
 
-    response.statusCode = 200;
-    response.send({
-        result: result
-    });
+        if (!Number.isInteger(n)) {
+            throw new Error('expected an integer');
+        }
+
+        const result = ((n % 2) == 1);
+
+        response.statusCode = 200;
+        response.send({
+            result: result
+        });
     }
     catch(e) {
         response.statusCode = 404;
